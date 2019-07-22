@@ -110,6 +110,19 @@ public class CustomCardInputReactManager extends SimpleViewManager<CreditCardFor
     view.setSecurityCodeTextHint(securityCodeTextHint);
   }
 
+  @ReactProp(name = "params")
+  public void setParams(CreditCardForm view, ReadableMap card) {
+    this.setCardNumber(view, card.getString("number"));
+    long month = Math.round(card.getDouble("expMonth"));
+    long year = Math.round(card.getDouble("expYear"));
+    if (month == 0 && year == 0){
+      this.setExpDate(view, "");
+    } else {
+      this.setExpDate(view, String.valueOf(month) + "/" + String.valueOf(month));
+    }
+    this.setSecurityCode(view, card.getString("cvc"));
+  }
+
 
   private void setListeners(final CreditCardForm view){
 
